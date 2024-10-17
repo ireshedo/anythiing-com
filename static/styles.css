@@ -1,0 +1,1000 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* home page css */
+
+header .wrapper {
+
+    width: 100%;
+    margin:auto;
+    padding: 20px; /* Add some padding if needed */
+    box-sizing: border-box;
+    display: flex;               /* Enable flexbox */
+    justify-content: space-between;  /* Space between logo and nav-area */
+    align-items: center;
+}
+
+header, main {
+    position: relative;
+    z-index: 1; /* Bring it above the gradient background */
+}
+
+
+
+.logo img {
+    position: relative;
+    width: 100px;
+    float: left;
+    height: auto;
+    border-radius: 50%; 
+    border: 2px solid #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}   
+
+.nav-area{
+    list-style: none;
+    display: flex;               /* Align navigation items horizontally */
+    margin: 0;   
+}
+
+.nav-area li {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.nav-area li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 20px;
+    font-family:poppins;
+    font-size: 30px;
+}
+
+.nav-area li a:hover {
+    background: #000;
+}
+
+.welcome-text {
+    position: relative;
+    width: 600px;
+    height: 300px;
+    margin: 20% 30%;
+    text-align: center;
+}
+
+.welcome-text h1 {
+    text-align: center;
+    color: #000;
+    text-transform: uppercase;
+    font-family: 'Merriweather', sans-serif;
+    font-size: 60px;
+    font-weight: bold;
+}
+
+.welcome-text h2 {
+    text-align: center;
+    color: #000;
+    text-transform: uppercase;
+    font-family: 'Merriweather', sans-serif;
+    font-size: 30px;
+    font-weight: normal;
+}
+
+.welcome-text input[type="text"], .quiz-error input[type="text"] {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 0px;
+    font-size: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: border 0.3s ease;
+}
+
+.welcome-text input[type="text"]:focus, .quiz-error input[type="text"]:focus  {
+    border: 2px solid #060c12;
+    outline: none;
+    box-shadow: 0 2px 10px rgba(0, 123, 255, 0.3);
+}
+
+.welcome-text button[type="submit"], .quiz-error button[type="submit"]  {
+    padding: 10px 20px;
+    border: 2px solid #060c12; 
+    border-radius: 0px; 
+    background-color: transparent; 
+    color: #060c12; 
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: none; 
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.welcome-text button[type="submit"]:hover, .quiz-error button[type="submit"]:hover {
+    background-color: #060c12; 
+    color: white; 
+    box-shadow: 0 4px 15px rgba(0, 86, 179, 0.4); 
+}
+
+#quiz-history-label {
+    text-align: center;
+    font-weight: bold;
+    font-size: 70px;
+    color: black;
+    text-transform: uppercase;
+    font-family: 'Merriweather', sans-serif;
+}
+
+#history-link {
+    text-align: center;
+}
+
+#history-link a, #no-quiz-history a {
+    font-size: 30px;
+    text-transform: uppercase;
+    font-family: 'Merriweather', sans-serif;
+    color: black;
+    text-decoration: none;
+
+}
+
+#history-link:hover a, #no-quiz-history:hover a, #login-recommendation-prompt:hover a {
+    color: blue;
+}
+
+
+#no-quiz-history {
+    text-align: center;
+    font-weight: bold;
+    font-size: 40px;
+    color: black;
+    font-family: 'Merriweather', sans-serif;
+    padding: 100px;
+}
+
+#bar-chart-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 40px;
+    color: black;
+    font-family: 'Merriweather', sans-serif;
+    padding: 30px;
+
+}
+
+#login-recommendation-prompt {
+    text-align: center;
+    font-size: 60px;
+    color: black;
+    font-family: 'Merriweather', sans-serif;
+    padding: 50px;
+}
+
+#login-recommendation-prompt a {
+    font-size: 65px;
+    font-family: 'Merriweather', sans-serif;
+    color: black;
+}
+
+#no-account {
+    text-align: center;
+    font-size: 70px;
+    font-weight: bold;
+    color: black;
+    font-family: 'Merriweather', sans-serif;
+    padding: 70px;
+}
+
+
+
+/* login / register sections */
+
+.account-access-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+
+
+.account-access{
+    width: 420px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    color: #fff;
+    border-radius: 10px;
+    padding: 30px 60px;
+}
+
+.account-access h1 {
+    font-size: 36px;
+    text-align: center;
+}
+
+.account-access .input-box {
+    width: 100%;
+    height: 50px;
+    margin: 30px 0;  
+}
+
+.account-access .input-box input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 40px;
+    font-size: 16px;
+    color: #fff;
+    padding: 20px 45px 20px 20px;
+
+}
+
+.account-access .input-box input::placeholder {
+    color: #fff;
+}
+
+.account-access button {
+    width: 100%;
+    height: 45px;
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+}
+
+.login-signup-link{
+    font-size: 14.5px;
+    text-align: center;
+    margin: 20px 0 15px;
+}
+
+.login-signup-link p a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+
+.login-signup-link p a:hover {
+    text-decoration: underline;
+}
+
+.account-access .remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14.5px;
+    margin: -15px 0 15px;
+}
+
+.remember-forgot label input {
+    accent-color: #fff;
+    margin-right: 3px;
+}
+
+.remember-forgot a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.remember-forgot a:hover {
+    text-decoration: underline;
+}
+
+.error-messages {
+    color: white;
+    background-color: transparent;
+    border-radius: 5px;
+    padding: 10px 15px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    list-style-type: none;
+    font-weight: bold;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* Form button */
+button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.input-box {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.account-access .input-box #toggleBtn
+{
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    width: 34px;
+    height: 34px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.account-access .input-box #toggleBtn::before
+{
+    content: '\f06e';
+    font-family: fontAwesome;
+}
+
+
+.account-access .input-box #toggleBtn.hide::before
+{
+    content: '\f070';
+}
+
+.validation
+{
+    background: transparent;
+    padding: 10px;
+    margin-top: 30px;
+    border-radius: 8px;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+}
+
+.validation ul
+{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.validation ul li {
+    position: relative;
+    list-style: none;
+    color: #fff;
+    font-size: 0.85em;
+    transition: 0.5s;
+
+}
+
+.validation ul li.valid
+{
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.validation ul li::before
+{
+    content: '\f192';
+    width: 20px;
+    height: 20px;
+    font-family: fontAwesome;
+    display: inline-flex;
+}
+
+.validation ul li.valid::before
+{
+    content: '\f00c';
+    color: #0f0;
+}
+
+/* styles for quiz selection section */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px); /* Optional: Makes the cards slide up a bit while fading in */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.quiz-selection {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 100px;
+}
+
+.card {
+    width: 325px;
+    background-color: transparent;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+    margin: 20px;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+    animation-delay: 0.3s;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+}
+
+.card-content, .start-quiz-content {
+    padding: 16px;
+    color: white;
+    text-shadow:
+    -1px -1px 0 #000,  
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+    
+}
+
+.card-content h3 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.card-content p {
+    color: 665;
+    font-size: 15px;
+    line-height: 1.3;
+}
+
+.card:hover {
+    transform: scale(1.15) translateY(-10px); /* Larger scale and upward translation */
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3); /* Deeper shadow for depth */
+    border: 2px solid rgba(0, 0, 0, 0.5); /* Optional: Highlight with a subtle border */
+}
+
+.quiz-select-prompt h3, .quiz-start-prompt h3 {
+    justify-content: center;
+    text-align: center;
+    color: #000;
+    text-transform: uppercase;
+    font-family: 'Merriweather', sans-serif;
+    font-size: 40px;
+    font-weight: bold; 
+}
+
+.quiz-start-prompt h3 {
+    padding-bottom: 20px; /* Adjust the value as needed */
+}
+
+.no-results h3 {
+    justify-content: center;
+    text-align: center;
+    color: #000;
+    text-transform: uppercase;
+    font-family: 'Merriweather', sans-serif;
+    font-size: 60px;
+    font-weight: bold; 
+}
+
+/* styles for start_quiz page */
+
+.start-quiz, .quiz-questions {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 40px;
+    
+}
+
+.start-quiz-card, .quiz-questions-card {
+    width: 1000px;
+    height: 600px;
+    background-color: transparent;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+    margin: 20px;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+    animation-delay: 0.3s;
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+
+
+.start-quiz-content h3 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.start-quiz-content p {
+    color: 665;
+    font-size: 15px;
+    line-height: 1.3;
+}
+
+.image-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.image-wrapper img {
+    height: auto; /* Adjust this value to ensure it fits within the card */
+    max-height: 250px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+.start-quiz-content {
+    padding: 10px;
+    color: white;
+    text-align: center;
+    width: 100%;
+    text-shadow:
+    -1px -1px 0 #000,  
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+    padding-bottom: 25px;
+}
+
+.start-quiz-btn, .question-submit-btn {
+    display: flex;
+    justify-content: center;
+}
+
+.start-quiz-btn button, .question-submit-btn button, .final-buttons-container button {
+    width: auto;
+    height: auto;
+}
+
+.quiz-checkbox {
+    padding-top: 25px;
+}
+
+.quiz-checkbox li {
+    font-family: 'Merriweather', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    gap: 10px;
+}
+
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.75s, visibility 0.75s;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.loader::after {
+    content: "";
+    width: 75px;
+    height: 75px;
+    border: 15px solid white;
+    border-top-color: black;
+    border-radius: 50%;
+    animation: loading 0.75s ease infinite;
+
+}
+
+@keyframes loading {
+    from { transform: rotate(0turn) }
+    to { transform: rotate(1turn) }
+}
+
+.loader h3 {
+    font-family: 'Merriweather', sans-serif;
+    font-size: 60px;
+    font-weight: bold;
+    color: black;
+
+}
+
+.loader p {
+    font-size: 40px;
+    color: black;
+}
+
+
+/* styles for quiz page */
+
+@keyframes finalscoreFadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#question-container {
+    overflow-y: auto;
+
+}
+
+.quiz-questions h3 {
+    font-family: 'Merriweather', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    padding:15px;
+    text-shadow: 
+    -1px -1px 0 #ccc,  
+    1px -1px 0 #ccc,
+    -1px 1px 0 #ccc,
+    1px 1px 0 #ccc;
+
+
+}
+
+
+.quiz-questions ul {
+    list-style-type: none;
+    font-family: 'Merriweather', sans-serif;
+    font-size: 27px;
+    padding: 20px;
+    text-shadow: 
+    -1px -1px 0 #ccc,  
+    1px -1px 0 #ccc,
+    -1px 1px 0 #ccc,
+    1px 1px 0 #ccc;
+
+}
+
+.quiz-questions ul li {
+    margin-bottom: 40px;
+}
+
+.quiz-questions ul li:hover {
+    transform: scale(1.0) translateY(-5px); /* Larger scale and upward translation */
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.3); /* Deeper shadow for depth */
+}
+
+
+.question-submit-btn button, .final-buttons-container button {
+    border-radius: 5px;
+    background-color: transparent;
+    color: black;
+    font-family: 'Merriweather', sans-serif;
+    font-weight: bold;
+    font-size: 35px;
+    border: 2px solid #ccc;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    padding-bottom: 10px;
+}
+
+.final-buttons-container button {
+    font-size: 30px;
+}
+
+.answer-container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.answer-container p {
+    font-family: 'Merriweather', sans-serif;
+    font-weight: bold;
+    font-size: 35px;
+    text-shadow: 
+    -1px -1px 0 #ccc,  
+    1px -1px 0 #ccc,
+    -1px 1px 0 #ccc,
+    1px 1px 0 #ccc;
+}
+
+.correct-answer {
+    color: green;
+    font-weight: bold;
+}
+
+.selected-answer {
+    font-weight: bold;
+}
+
+.correct {
+    color: green;
+    font-weight: bold;
+    font-size: 45px;
+}
+
+.incorrect {
+    color: red;
+    font-weight: bold;
+    font-size: 45px;
+}
+#select-choice-id {
+    justify-content: center;
+}
+#select-choice-alert {
+    color: red;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#timer-alert {
+    justify-content: center;
+    color: red;
+}
+
+#final-score-results {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#final-score-results > * {
+    animation: finalscoreFadein 1s ease-in-out;
+}
+
+#final-score-results p {
+
+    font-weight: bold;
+    text-shadow: 
+    -1px -1px 0 #ccc,  
+    1px -1px 0 #ccc,
+    -1px 1px 0 #ccc,
+    1px 1px 0 #ccc;
+}
+
+.scores-flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 40px;
+    width: 100%;
+}
+
+.score-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    max-width: 200px;
+    text-align: center;
+}
+
+#fraction-score, #percentage-score, #quiz-grade {
+    font-size: 70px; 
+}
+
+#fraction-statement, #percentage-statement, #grade {
+    font-size: 35px;
+}
+
+#knowledge-level-statement {
+    font-size: 30px;
+    text-align: center;
+    padding: 10px;
+    padding-top: 30px;
+}
+
+.final-buttons-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+    padding-left: 150px;
+    padding-right: 150px;
+}
+
+.quiz-error {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.quiz-error p {
+    font-family: 'Merriweather', sans-serif;
+    font-size: 35px;
+    font-weight: bold;
+    color: black;
+}
+
+.quiz-error li {
+    font-family: 'Merriweather', sans-serif;
+    font-size: 25px;
+    color: black;
+}
+
+
+
+
+
+
+/* styles for animated background */
+
+:root {
+  --color-bg1: rgb(108, 0, 162);
+  --color-bg2: rgb(0, 17, 82);
+  --color1: 18, 113, 255;
+  --color2: 221, 74, 255;
+  --color3: 100, 220, 255;
+  --color4: 200, 50, 50;
+  --color5: 180, 180, 50;
+  --color-interactive: 140, 100, 255;
+  --circle-size: 80%;
+  --blending: hard-light;
+}
+
+@keyframes moveInCircle {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes moveVertical {
+  0% {
+    transform: translateY(-50%);
+  }
+  50% {
+    transform: translateY(50%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes moveHorizontal {
+  0% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+  50% {
+    transform: translateX(50%) translateY(10%);
+  }
+  100% {
+    transform: translateX(-50%) translateY(-10%);
+  }
+}
+
+
+.gradient-bg {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  overflow: hidden;
+  background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
+  top: 0;
+  left: 0;
+  z-index: -1;
+
+  svg {
+    display: none;
+  }
+
+
+  .gradients-container {
+    filter: url(#goo) blur(40px) ;
+    width: 100%;
+    height: 100%;
+  }
+
+  .g1 {
+    position: absolute;
+    background: radial-gradient(circle at center, rgba(var(--color1), 0.8) 0, rgba(var(--color1), 0) 50%) no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: var(--circle-size);
+    height: var(--circle-size);
+    top: calc(50% - var(--circle-size) / 2);
+    left: calc(50% - var(--circle-size) / 2);
+
+    transform-origin: center center;
+    animation: moveVertical 30s ease infinite;
+
+    opacity: 1;
+  }
+
+  .g2 {
+    position: absolute;
+    background: radial-gradient(circle at center, rgba(var(--color2), 0.8) 0, rgba(var(--color2), 0) 50%) no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: var(--circle-size);
+    height: var(--circle-size);
+    top: calc(50% - var(--circle-size) / 2);
+    left: calc(50% - var(--circle-size) / 2);
+
+    transform-origin: calc(50% - 400px);
+    animation: moveInCircle 20s reverse infinite;
+
+    opacity: 1;
+  }
+
+  .g3 {
+    position: absolute;
+    background: radial-gradient(circle at center, rgba(var(--color3), 0.8) 0, rgba(var(--color3), 0) 50%) no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: var(--circle-size);
+    height: var(--circle-size);
+    top: calc(50% - var(--circle-size) / 2 + 200px);
+    left: calc(50% - var(--circle-size) / 2 - 500px);
+
+    transform-origin: calc(50% + 400px);
+    animation: moveInCircle 40s linear infinite;
+
+    opacity: 1;
+  }
+
+  .g4 {
+    position: absolute;
+    background: radial-gradient(circle at center, rgba(var(--color4), 0.8) 0, rgba(var(--color4), 0) 50%) no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: var(--circle-size);
+    height: var(--circle-size);
+    top: calc(50% - var(--circle-size) / 2);
+    left: calc(50% - var(--circle-size) / 2);
+
+    transform-origin: calc(50% - 200px);
+    animation: moveHorizontal 40s ease infinite;
+
+    opacity: 0.7;
+  }
+
+  .g5 {
+    position: absolute;
+    background: radial-gradient(circle at center, rgba(var(--color5), 0.8) 0, rgba(var(--color5), 0) 50%) no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: calc(var(--circle-size) * 2);
+    height: calc(var(--circle-size) * 2);
+    top: calc(50% - var(--circle-size));
+    left: calc(50% - var(--circle-size));
+
+    transform-origin: calc(50% - 800px) calc(50% + 200px);
+    animation: moveInCircle 20s ease infinite;
+
+    opacity: 1;
+  }
+
+  .interactive {
+    position: absolute;
+    background: radial-gradient(circle at center, rgba(var(--color-interactive), 0.8) 0, rgba(var(--color-interactive), 0) 50%) no-repeat;
+    mix-blend-mode: var(--blending);
+
+    width: 100%;
+    height: 100%;
+    top: -50%;
+    left: -50%;
+
+    opacity: 0.7;
+  }
+}

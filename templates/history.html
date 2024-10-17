@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quiz
+{% endblock %}
+
+{% block main %}
+<h3 id="quiz-history-label">Your Quiz History</h3>
+
+
+{% if rows %}
+
+<div id="quiz-selection" class="quiz-selection">
+    {% for item in rows %}
+
+    <form action="/start_quiz" method="post">
+        <div class="card" onclick="this.closest('form').submit();">
+                <img src="{{ item.quiz_image }}" alt="Image for {{ item.quiz_image }}">
+                <input type="hidden" name="image_url" value="{{ item.quiz_image }}">
+                <div class="card-content">
+                    <h3>{{ item.quiz_topic }}</h3>
+                    <p>{{ item.quiz_description }}</p>
+                    <p>Taken on: {{ item.created_at }}</p>
+                    <p>Score: {{ item.quiz_score }}</p>
+                </div>
+                <input type="hidden" name="item_label" value="{{ item.quiz_topic }}">
+                <input type="hidden" name="item_description" value="{{ item.quiz_description }}">
+            </div>
+            </form>
+    {% endfor %}
+</div>
+
+{% else %}
+
+<p id="no-quiz-history">No quiz history yet. Go to the <a href="/">Home</a> page to take your first quiz!</p>
+
+{% endif %}
+{% endblock %}

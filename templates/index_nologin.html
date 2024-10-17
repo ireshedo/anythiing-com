@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+<div class="welcome-text">
+    <h1>Do you really know what you know?</h1>
+    <h2>Welcome to ANYTHIING.COM where you can test your knowledge on any topic known to man! Are you sure you really know what you know? Find out by inserting a topic below.</h2>
+    <form action="/quiz_select" method="post">
+    <input type="text" name="topic" placeholder="Type quiz topic here (Person, Place, Thing or Idea)">
+    <button type="submit">Begin Quiz as Guest</button>
+    </form>
+</div>
+
+<h3 id="no-account">Don't Have an account?</h3>
+<h3 id="login-recommendation-prompt"><a href="/signup">Sign Up</a> to save your quiz history and view a chart displaying which general knowledge topics you find more strength in!</h3>
+{% endblock %}

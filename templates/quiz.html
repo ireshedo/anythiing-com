@@ -1,0 +1,426 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quiz
+{% endblock %}
+
+{% block main %}
+{% if questions_list_for_html %}
+<div class="quiz-questions" id="quiz-questions-id">
+
+    <div class="question-index" id="question-index-id">
+        <h3>Question <span id="question-number">1</span> / {{ questions_length }}</h3>
+    </div>
+
+    <div class="final-score" id="final-score-id" style="display: none;">
+        <h3>Final Score</h3>
+    </div>
+
+    <div class="quiz-questions-card" id="question-container">
+
+            <h3 id="question-text">{{ questions_list_for_html[0].question }}</h3>
+
+            <div class="options" id="options-container" style="display: flex;">
+            <ul id="options-list">
+                {% for option in questions_list_for_html[0].options %}
+                    <li>
+                        <input type="radio" id="option{{ loop.index }}" name="question" value="{{ option }}">
+                        <label for="option{{ loop.index }}">{{ option }}</label>
+                    </li>
+                {% endfor %}
+            </ul>
+            </div>
+
+            <div class="answer-container" id="answer-section" style="display: none;">
+                <div class="correct" id="correct-id" style="display: none;">
+                    <p>Correct!</p>
+                </div>
+    
+                <div class="incorrect" id="incorrect-id" style="display: none;">
+                    <p>Incorrect.</p>
+                </div>
+                <p id="selected-answer-p-id">You selected: <span id="selected-answer"></span></p>
+                <p>Answer: <span class="correct-answer" id="correct-answer-id">{{ questions_list_for_html[0].answer }}</span></p>
+                <p>Explanation: <span id="explanation-id">{{ questions_list_for_html[0].explanation }}</span></p>
+            </div>
+        <div class="question-submit-btn">
+            <button id="submit-btn" type="submit">Submit</button>
+            <button id="next-btn" type="submit" style="display: none;">Next</button>
+        </div>
+        <div id="select-choice-id" style="display: none;">
+            <h3 id="select-choice-alert">Please select an option.</h3>
+        </div>
+
+
+        <div class="final-score-container" id="score-container-id" style="display: none;">
+            <div id="final-score-results">
+                <div class="scores-flex-container">
+                    <div class="score-container" id="sc1">
+                        <p id="fraction-score"></p>
+                        <p id="fraction-statement">Questions correct</p>
+                    </div>
+
+                    <div class="score-container" id="sc2">
+                        <p id="percentage-score"></p>
+                        <p id="percentage-statement">Percentage</p>
+                    </div>
+
+                    <div class="score-container" id="sc3">
+                        <p id="quiz-grade"></p>
+                        <p id="grade">Grade</p>
+                    </div>
+                </div>
+
+            <p id="knowledge-level-statement"></p>
+
+            <div class="final-buttons-container">
+                <form action="/" method="post" id="exit-button-form">
+                <button id="exit-btn" type="submit" style="display: none;">Exit Quiz</button>
+
+                <input type="hidden" name="quiz-subject" id="quiz-subject" value='{{ questions_list_for_html[-1].subject }}'>
+                <input type="hidden" name="quiz_image" value="{{ quiz_image }}">
+                <input type="hidden" name="quiz_topic" value="{{ quiz_topic }}">
+                <input type="hidden" name="quiz_description" value="{{ quiz_description }}">
+                </form>
+                <button id="retry-btn" type="submit" style="display: none;">Retry Quiz</button>
+            </div>
+
+            </div>
+
+        </div>
+        
+    </div>
+
+    <input type="hidden" name="questions-length" id="questions-length" value='{{ questions_length }}'>
+    <input type="hidden" name="timer" id="timer" value='{{ timer }}'>
+</div>
+{% else %}
+<div class="quiz-error">
+    <p>We were unable to generate a quiz based on the topic you entered. Here are some possible reasons why:</p>
+    <ul>
+        <li>The topic might be too broad or unclear. Try being more specific.</li>
+        <li>The topic could be too niche or not well-documented.</li>
+        <li>The input might not be a valid or recognized topic.</li>
+        <li>The topic may involve speculative or unsupported information.</li>
+        <li>There may not be enough information released on this topic.</li>
+        <li>There may have been a technical issue. Please try again later.</li>
+    </ul>
+    <p>Feel free to try a different subject below or refine your input to help us generate a quiz!</p>
+
+    <form action="/quiz_select" method="post">
+        <input type="text" name="topic" placeholder="Type quiz topic here (Person, Place, Thing or Idea)">
+        <button type="submit">Begin Quiz</button>
+    </form>
+</div>
+
+
+{% endif %}
+
+
+
+<script>
+    const questionsValue = {{ questions_list | tojson | safe }};
+
+
+    if (!questionsValue) {
+    console.log("No questions available.");
+    }
+
+
+    const questions = JSON.parse(questionsValue);
+    
+
+    let currentQuestionindex = 0;
+    let questionLengthindex = 1;
+    let correctQuestions = 0;
+
+    let timerInterval;
+    let timerElement;
+    let timeRemaining;
+    let timerAlert;
+
+    let quizLengthNumber = document.getElementById('questions-length').value;
+
+    let questionNumberSpan = document.getElementById('question-number');
+
+
+    let timerLength = document.getElementById('timer').value;
+    
+    if (timerLength !== 'No') {
+
+        timerElement = document.createElement('h3');
+        timerElement.id = 'timer-element';
+        const timerHTMLposition = document.getElementById('question-index-id');
+        timerHTMLposition.insertAdjacentElement('afterend', timerElement);
+
+        function startTimer(duration) {
+            timeRemaining = duration;
+            timerElement.textContent = `Time Remaining: ${timeRemaining}s`;
+            timerElement.style.display = 'flex';
+
+            timerInterval = setInterval(function () {
+                timeRemaining--;
+                timerElement.textContent = `Time Remaining: ${timeRemaining}s`;
+
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    timerElement.style.display = 'none';
+                    timerAlert = document.createElement('h3');
+                    timerAlert.id = 'timer-alert';
+                    const timerAlertHTMLposition = document.getElementById('question-text');
+                    timerAlertHTMLposition.insertAdjacentElement('afterend', timerAlert);
+                    timerAlert.textContent = `Time's up!`;
+                    timerAlert.style.display = 'flex';
+                    handleSubmit();
+                }
+
+            }, 1000); 
+        }
+    }
+
+    function handleSubmit() {
+
+        let selectedOption = document.querySelector('input[name="question"]:checked');
+        let currentAnswer = questions[currentQuestionindex].answer;
+
+        if (selectedOption) {
+
+            if (timerLength !== 'No') {
+                if (timeRemaining > 0) {
+                    clearInterval(timerInterval);
+                    timerElement.style.display = 'none';
+                }
+            }
+
+
+            if (timeRemaining > 0 || timerLength === 'No') {
+
+
+                document.getElementById('selected-answer').textContent = selectedOption.value;
+                document.getElementById('select-choice-id').style.display = 'none';
+                if (selectedOption.value === currentAnswer.toString()) {
+                    document.getElementById('correct-id').style.display = 'flex';
+                    correctQuestions++;
+                }
+
+                else {
+                    document.getElementById('incorrect-id').style.display = 'flex';
+                }
+
+            }
+
+            else {
+                document.getElementById('selected-answer-p-id').style.display = 'none';
+                document.getElementById('incorrect-id').style.display = 'flex';
+
+            }
+        }
+        else {
+
+            if (timeRemaining > 0 || timerLength === 'No') {
+
+                document.getElementById('select-choice-id').style.display = 'flex';
+                return;
+            }
+
+            else {
+                document.getElementById('selected-answer-p-id').style.display = 'none';
+                document.getElementById('incorrect-id').style.display = 'flex';
+            }
+        }
+
+        let correctAnswer = document.getElementById('correct-answer-id');
+        let explanation = document.getElementById('explanation-id');
+
+        correctAnswer.textContent = questions[currentQuestionindex].answer;
+        explanation.textContent = questions[currentQuestionindex].explanation;
+
+
+        document.getElementById('answer-section').style.display = 'flex';
+        document.getElementById('submit-btn').style.display = 'none';
+        document.getElementById('next-btn').style.display = 'flex';
+        document.getElementById('options-container').style.display = 'none';
+
+        currentQuestionindex++;
+    }
+
+    document.getElementById('submit-btn').addEventListener('click', handleSubmit);
+
+    document.getElementById('next-btn').addEventListener('click', function() {
+        questionLengthindex++;
+
+
+        if (questionLengthindex > quizLengthNumber) {
+
+
+            let fractionScore = document.getElementById('fraction-score');
+            fractionScore.textContent = `${correctQuestions} / ${currentQuestionindex}`;
+
+            let percentageScore = document.getElementById('percentage-score');
+
+            let percentageResult = correctQuestions / currentQuestionindex;
+            let percentage = Math.ceil(percentageResult * 100);
+
+            percentageScore.textContent = `${percentage}%`;
+
+
+            let score = parseInt(percentageScore.textContent);
+            let knowledgeStatement = document.getElementById('knowledge-level-statement');
+            let quizGrade = document.getElementById('quiz-grade');
+
+
+            if (score >= 90) {
+                quizGrade.textContent = 'A';
+                quizGrade.style.color = '#4CAF50';
+                knowledgeStatement.innerHTML = `You are an <span id="knowledge-level">Expert</span> on this topic. You demonstrate comprehensive and exceptional knowledge, understanding, and mastery of the subject.`;
+                let knowledgeLevel = document.getElementById('knowledge-level');
+                knowledgeLevel.style.color = '#4CAF50';
+            }
+            else if (score >= 80) {
+                quizGrade.textContent = 'B';
+                quizGrade.style.color = '#8BC34A';
+                knowledgeStatement.innerHTML = `You have <span id="knowledge-level">Proficient</span> knowledge on this topic. You show strong competence and a solid grasp of the subject, with some errors and gaps.`;
+                let knowledgeLevel = document.getElementById('knowledge-level');
+                knowledgeLevel.style.color = '#8BC34A';
+            }
+            else if (score >= 70) {
+                quizGrade.textContent = 'C';
+                quizGrade.style.color = '#FFEB3B';
+                knowledgeStatement.innerHTML = `You have <span id="knowledge-level">Competent</span> knowledge on this topic. You have a good understanding of key concepts but have some areas that need improvement.`;
+                let knowledgeLevel = document.getElementById('knowledge-level');
+                knowledgeLevel.style.color = '#FFEB3B';
+            }
+            else if (score >= 60) {
+                quizGrade.textContent = 'D';
+                quizGrade.style.color = '#FF9800';
+                knowledgeStatement.innerHTML = `You have <span id="knowledge-level">Limited</span> knowledge on this topic. You understand some basics but lack depth in knowledge of the topic and struggle with more complex concepts.`;
+                let knowledgeLevel = document.getElementById('knowledge-level');
+                knowledgeLevel.style.color = '#FF9800';
+            }
+            else {
+                quizGrade.textContent = 'F';
+                quizGrade.style.color = '#F44336';
+                knowledgeStatement.innerHTML = `You are a <span id="knowledge-level">Novice</span> on this topic. You lack foundational knowledge and understanding of the subject, requiring significant improvement.`;
+                let knowledgeLevel = document.getElementById('knowledge-level');
+                knowledgeLevel.style.color = '#F44336';
+            }
+
+            if (timerAlert) {
+
+                timerAlert.style.display = 'none';
+            }
+
+            exitButtonform = document.getElementById('exit-button-form');
+
+            scoreAverages = document.createElement('input');
+            scoreAverages.name = 'score-average';
+            scoreAverages.value = `${score}`;
+            scoreAverages.type = 'hidden';
+
+            exitButtonform.appendChild(scoreAverages);
+
+
+
+
+            document.getElementById('question-index-id').style.display = 'none';
+            document.getElementById('retry-btn').style.display = 'flex';
+            document.getElementById('exit-btn').style.display = 'flex';
+            document.getElementById('final-score-id').style.display = 'flex';
+            document.getElementById('score-container-id').style.display = 'flex';
+            document.getElementById('question-text').style.display = 'none';
+            document.getElementById('correct-id').style.display = 'none';
+            document.getElementById('incorrect-id').style.display = 'none';
+            document.getElementById('answer-section').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+            return;
+        }
+        questionNumberSpan.textContent = questionLengthindex;
+
+        document.getElementById('question-text').innerText = questions[currentQuestionindex].question;
+
+        let optionsList = document.getElementById('options-list');
+        optionsList.innerHTML = '';
+
+        questions[currentQuestionindex].options.forEach((option, index) => {
+            optionsList.innerHTML += `
+                <li>
+                    <input type="radio" id="option${index + 1}" name="question" value="${option}"></input>
+                    <label for="option${index + 1}">${option}</label>
+
+                </li> `
+
+        });
+
+
+        document.getElementById('correct-id').style.display = 'none';
+        document.getElementById('incorrect-id').style.display = 'none';
+        document.getElementById('answer-section').style.display = 'none';
+        document.getElementById('submit-btn').style.display = 'flex';
+        document.getElementById('next-btn').style.display = 'none';
+        document.getElementById('options-container').style.display = 'flex';
+
+        if (timerLength !== 'No') {
+
+            if (timerAlert) {
+
+                timerAlert.style.display = 'none';
+            }
+
+            startTimer(timerLength);
+        }
+
+    })
+    
+    if (timerLength !== 'No') {
+
+        startTimer(timerLength);
+    }
+
+
+    document.getElementById('retry-btn').addEventListener('click', function () {
+    
+    currentQuestionindex = 0;
+    questionLengthindex = 1;
+    correctQuestions = 0;
+
+    
+    document.getElementById('fraction-score').textContent = '';
+    document.getElementById('percentage-score').textContent = '';
+    document.getElementById('question-index-id').style.display = 'flex';
+    document.getElementById('question-text').style.display = 'block';
+    document.getElementById('final-score-id').style.display = 'none';
+    document.getElementById('score-container-id').style.display = 'none';
+    document.getElementById('retry-btn').style.display = 'none';
+    document.getElementById('exit-btn').style.display = 'none';
+    
+    
+    document.getElementById('answer-section').style.display = 'none';
+    document.getElementById('next-btn').style.display = 'none';
+    document.getElementById('submit-btn').style.display = 'flex';
+    document.getElementById('options-container').style.display = 'flex';
+
+    
+    questionNumberSpan.textContent = questionLengthindex;
+    document.getElementById('question-text').innerText = questions[currentQuestionindex].question;
+    
+    
+    let optionsList = document.getElementById('options-list');
+    optionsList.innerHTML = '';
+    questions[currentQuestionindex].options.forEach((option, index) => {
+        optionsList.innerHTML += `
+            <li>
+                <input type="radio" name="question" value="${option}"></input>
+                <label for="option${index + 1}">${option}</label>
+            </li> `;
+    });
+
+    if (timerLength !== 'No') {
+        if (timerAlert) {
+            timerAlert.style.display = 'none';
+        }
+        startTimer(timerLength);  
+    }
+});
+
+</script>
+{% endblock %}

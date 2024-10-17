@@ -1,0 +1,128 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+<div class="account-access-wrapper">
+    <div class="account-access"> 
+        <form action="/signup" method="post">
+            <h1>Sign Up</h1>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class="error-messages">
+                        {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            <div class="input-box">
+                <input type="text" placeholder="Username" id="usrnm" name="username"
+                required>
+            </div>
+            <div class="input-box">
+                <input type="password" id="pswrd" placeholder="Password" name="password"
+                required onkeyup="checkPassword(this.value)">
+                <span id="toggleBtn"></span>
+            </div>
+            <div class="validation">
+                <ul>
+                    <li id="lower">At least one lowercase letter</li>
+                    <li id="upper">At least one uppercase letter</li>
+                    <li id="number">At least one number</li>
+                    <li id="special">At least one special character</li>
+                    <li id="length">At least 8 characters</li>
+                </ul>
+            </div>
+            <div class="input-box">
+                <input type="password" id="cnfrm" placeholder="Confirm" name="confirmation"
+                required>
+            </div>
+             
+            <button type="submit">Sign Up</button>
+            <div class="login-signup-link">
+                <p>Already have an account? <a href="/login">Login</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- java code for sign in page -->
+
+
+<script>
+    let pswrd = document.getElementById('pswrd');
+    let toggleBtn = document.getElementById('toggleBtn');
+    
+    let lowerCase = document.getElementById('lower');
+    let upperCase = document.getElementById('upper');
+    let digit = document.getElementById('number');
+    let specialChar = document.getElementById('special');
+    let minLength = document.getElementById('length');
+    
+    
+    function checkPassword(data){
+        const lower = new RegExp('(?=.*[a-z])');
+        const upper = new RegExp('(?=.*[A-Z])');
+        const number = new RegExp('(?=.*[0-9])');
+        const special = new RegExp('(?=.*[!@#\$%\^&\*])');
+        const length = new RegExp('(?=.{8,})');
+        
+       if(lower.test(data)){
+        lowerCase.classList.add('valid'); 
+       } else {
+        lowerCase.classList.remove('valid');
+       }
+
+       if(upper.test(data)){
+        upperCase.classList.add('valid'); 
+       } else {
+        upperCase.classList.remove('valid');
+       }
+
+       if(number.test(data)){
+        digit.classList.add('valid'); 
+       } else {
+        digit.classList.remove('valid');
+       }
+
+
+       if(special.test(data)){
+        specialChar.classList.add('valid'); 
+       } else {
+        specialChar.classList.remove('valid');
+       }
+
+
+       if(length.test(data)){
+        minLength.classList.add('valid'); 
+       } else {
+        minLength.classList.remove('valid');
+       }
+    }
+
+
+
+    toggleBtn.onclick = function(){
+        if (pswrd.type === 'password'){
+            pswrd.setAttribute('type', 'text');
+            toggleBtn.classList.add('hide');
+        } else {
+            pswrd.setAttribute('type', 'password');
+            toggleBtn.classList.remove('hide');
+        }
+    }
+</script>
+
+{% endblock %}

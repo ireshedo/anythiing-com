@@ -1,0 +1,163 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Start Quiz
+{% endblock %}
+
+{% block main %}
+<div class="start-quiz" id="start-quiz">
+
+    <div class="quiz-start-prompt">
+        <h3>Adjust settings and begin your quiz. Good luck!</h3>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class="error-messages">
+                        {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+
+    <div class="start-quiz-card">
+
+        <div class="image-wrapper">
+        <img src="{{ quiz_image }}" alt="Image for {{ quiz_topic }}">
+        </div>
+
+        <div class="start-quiz-content">
+            <h3>{{ quiz_topic }}</h3>
+            <p>{{ quiz_description }}</p>
+        </div>
+        <form action="/quiz" method="post">
+        <div class="quiz-checkbox">
+            <ul>
+                <li id="timer-checkboxes">
+                    Timer per question?
+                    <input type="radio" id="timercheckbox1" name="timer" value="Yes">
+                    <label for="timercheckbox1">Yes</label>
+                    <input type="radio" id="timercheckbox2" name="timer" value="No">
+                    <label for="timercheckbox2">No</label>
+
+                    <div id="timerSelectContainer" style="display: none;">
+                        <label for="timerSelect">Select from 1-30 seconds</label>
+                        <select id="timerSelect" name="timerSelect">
+                            <option value="">Select a time</option>
+                            <script>
+                                for (let i = 1; i <= 30; i++) {
+                                    document.write('<option value="' + i + '">' + i + '</option>');
+                                }
+                            </script>
+                        </select>
+                    </div>
+                </li>
+        
+                <li id="questions-checkboxes">
+                    How many questions?
+                    <input type="radio" id="questioncheckbox1" name="questions" value="10">
+                    <label for="questioncheckbox1">10</label>
+                    <input type="radio" id="questioncheckbox2" name="questions" value="15">
+                    <label for="questioncheckbox2">15</label>
+                    <input type="radio" id="questioncheckbox3" name="questions" value="20">
+                    <label for="questioncheckbox3">20</label>
+
+                    <input type="radio" id="customRadio" name="questions" value="custom">
+                    <label for="customRadio">Custom</label>
+                    
+                    
+                    <select id="customSelect" name="customSelect" disabled>
+                        <option value="">Select custom number</option>
+                        <!-- Options for 1 to 50 -->
+                        <script>
+                            for (let i = 1; i <= 50; i++) {
+                                document.write('<option value="' + i + '">' + i + '</option>');
+                            }
+                        </script>
+                    </select>
+                </li>
+        
+                <li id="difficulty-checkboxes">
+                    Difficulty
+                    <input type="radio" id="difficultycheckbox1" name="difficulty" value="Average">
+                    <label for="difficultycheckbox1">Average</label>
+                    <input type="radio" id="difficultycheckbox2" name="difficulty" value="Hard">
+                    <label for="difficultycheckbox2">Hard</label>
+                </li>
+            </ul>
+        </div>
+
+        <div class="start-quiz-btn">
+            <button id="begin-quiz-btn-id" type="submit">Begin Quiz</button>
+        </div>
+
+
+
+        <input type="hidden" name="quiz_image" value="{{ quiz_image }}">
+        <input type="hidden" name="quiz_topic" value="{{ quiz_topic }}">
+        <input type="hidden" name="quiz_description" value="{{ quiz_description }}">
+        </form>
+    </div>
+
+</div>
+
+<div class="loader" id="loader" style="display: none;">
+    <h3>Generating Quiz...</h3>
+    <p>This may take up to a minute or two.</p>
+
+</div>
+
+
+
+<script>
+    const customRadio = document.getElementById('customRadio');
+    const customSelect = document.getElementById('customSelect');
+    const radioButtons = document.querySelectorAll('input[name="questions"]:not(#customRadio)');
+    const yesRadio = document.getElementById('timercheckbox1');
+    const noRadio = document.getElementById('timercheckbox2');
+    const timerSelectContainer = document.getElementById('timerSelectContainer');
+
+    // Handle custom radio button selection
+    customRadio.addEventListener('change', function() {
+        if (customRadio.checked) {
+            customSelect.disabled = false; // Enable the custom dropdown
+            radioButtons.forEach(radio => {
+                radio.checked = false;  // Deselect any selected radio buttons
+            });
+        }
+    });
+
+    // Handle selection of predefined radio buttons
+    radioButtons.forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (radio.checked) {
+                customSelect.disabled = true;  // Disable the custom dropdown
+                customSelect.value = '';       // Reset select value
+                customRadio.checked = false;  // Deselect the custom radio button
+                customRadio.disabled = false; // Enable the custom radio button
+            }
+        });
+    });
+
+    function updateSelectVisibility() {
+        if (yesRadio.checked) {
+            timerSelectContainer.style.display = 'block'; // Show select input
+        } else {
+            timerSelectContainer.style.display = 'none'; // Hide select input
+        }
+    }
+
+    // Attach event listeners to the radio buttons
+    yesRadio.addEventListener('change', updateSelectVisibility);
+    noRadio.addEventListener('change', updateSelectVisibility);
+
+    document.getElementById('begin-quiz-btn-id').addEventListener('click', function() {
+
+        document.getElementById('start-quiz').style.display = 'none';
+        document.getElementById('loader').style.display = 'flex';
+
+
+    })
+</script>
+{% endblock %}

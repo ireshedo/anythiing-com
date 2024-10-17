@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Select Quiz
+{% endblock %}
+
+{% block main %}
+{% if results_list %}
+<div class="quiz-select-prompt">
+    <h3>Select a topic from the results below.</h3>
+</div>
+
+<div id="quiz-selection" class="quiz-selection">
+    {% for item in results_list %}
+    <form action="/start_quiz" method="post">
+    <div class="card" onclick="this.closest('form').submit();">
+            {% if item.image_url != "No image available for this entity." %}
+                <img src="{{ item.image_url }}" alt="Image for {{ item.label }}">
+                <input type="hidden" name="image_url" value="{{ item.image_url }}">
+            {% else %}
+            <img src="/static/images/no-photography-sign-image-vector-23665020.jpg" alt="Image for {{ item.label }}">
+            <input type="hidden" name="image_url" value="/static/images/IMG_5835.jpg">
+            {% endif %}
+            <div class="card-content">
+                <h3>{{ item.label }}</h3>
+                <p>{{ item.description }}</p>
+            </div>
+            <input type="hidden" name="item_label" value="{{ item.label }}">
+            <input type="hidden" name="item_description" value="{{ item.description }}">
+        </div>
+        </form>
+    {% endfor %}
+
+   
+{% else %}
+        <div class="no-results">
+            <h3>There is no results for this prompt 😕. Please try again.</h3>
+        </div>
+{% endif %}
+</div>
+
+
+
+
+
+{% endblock %}

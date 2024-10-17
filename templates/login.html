@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+<div class="account-access-wrapper">
+    <div class="account-access"> 
+        <form action="/login" method="post">
+            <h1>Login</h1>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class="error-messages">
+                        {% for category, message in messages %}
+                            <li class="{{ category }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            <div class="input-box">
+                <input type="text" placeholder="Username" name="username"
+                required>
+                <box-icon type='solid' name='user'></box-icon>
+            </div>
+            <div class="input-box">
+                <input type="password" placeholder="Password" name="password"
+                required>
+                <box-icon name='lock' type='solid' ></box-icon>
+            </div>
+            <button type="submit">Log In</button>
+            <div class="login-signup-link">
+                <p>Don't have an account?<a href="/signup"> Sign Up</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
