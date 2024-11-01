@@ -2,7 +2,7 @@ import os
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session, jsonify
 from flask_session import Session
-from helper_functions import login_required, search_wikidata, parse_quiz_output
+from helper_functions import login_required, search_wikidata
 import bcrypt
 from password_validator import PasswordValidator
 from dotenv import load_dotenv, find_dotenv
