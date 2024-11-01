@@ -2,7 +2,6 @@ from functools import wraps
 from flask import redirect, session, render_template, request
 import requests
 from concurrent.futures import ThreadPoolExecutor, as_completed
-import re
 
 
 
@@ -94,50 +93,5 @@ def search_wikidata(query, limit=30):
     
     return results_list
 
-
-
-
-def parse_quiz_output(response_text):
-    # Split the response into individual questions using a pattern that finds the numbered questions.
-    questions = re.split(r'\n(?=\d+\.)', response_text.strip())
-    
-    # Prepare an empty list to hold the parsed questions.
-    parsed_questions = []
-    
-    # Process each question.
-    for question_block in questions:
-        # Split the question block into lines.
-        lines = question_block.split('\n')
-        
-        # Extract the question itself.
-        question = lines[0].strip()
-        
-        # Extract the answer options (assumed to be lines starting with a), b), etc.).
-        options = [line.strip() for line in lines[1:5]]  # Assuming 4 options.
-        
-        # Extract the answer (format: "Answer: b)").
-        answer_line = lines[5].strip()
-        answer = answer_line.split("Answer:")[1].strip()
-        
-        # Extract the explanation (the line after the answer).
-        explanation_line = lines[6].strip()
-        explanation = explanation_line.split("Explanation:")[1].strip()
-        
-        # Set the media to None (since no media is present in this response).
-        media = None
-        
-        # Build a dictionary for this question.
-        question_dict = {
-            'question': question,
-            'options': options,
-            'answer': answer,
-            'explanation': explanation,
-            'media': media
-        }
-        
-        # Append the dictionary to the list of parsed questions.
-        parsed_questions.append(question_dict)
-    
-    return parsed_questions
 
 
