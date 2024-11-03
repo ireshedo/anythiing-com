@@ -25,3 +25,4 @@ zipp==3.19.2
 openai
 plotly
 requests
+gunicorn
