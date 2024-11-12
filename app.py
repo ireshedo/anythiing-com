@@ -25,6 +25,7 @@ Session(app)
 
 
 
+
 db = SQL("sqlite:///anything_data.db")
 
 subjects = ['Science', 'Social Studies', 'Culture', 'Entertainment', 'Math', 'Literature']
@@ -101,6 +102,9 @@ def index():
             if request.method == "POST":
 
                 quiz_subject = request.form.get("quiz-subject")
+                print(quiz_subject)
+
+
                 quiz_score = float(request.form.get("score-average"))
 
                 quiz_totals_data = db.execute("SELECT quiz_totals.quizzes_taken, quiz_totals.subject_average_score FROM quiz_totals WHERE quiz_totals.user_id = :user_id AND quiz_totals.quiz_subjects = :quiz_subject", user_id=session["user_id"], quiz_subject=quiz_subject)
@@ -120,7 +124,7 @@ def index():
                 # update quiz_totals table
 
                 db.execute("UPDATE quiz_totals SET quizzes_taken = ?, subject_average_score = ? WHERE user_id = ? AND quiz_subjects = ?", quizzes_taken, new_average_score, session["user_id"], quiz_subject)
-
+                
                 # Insert new column into quiz_history table
 
                 db.execute("INSERT INTO quiz_history (user_id, quiz_topic, quiz_description, quiz_image, quiz_score, quiz_subject) VALUES(?, ?, ?, ?, ?, ?)", session["user_id"], request.form.get('quiz_topic'), request.form.get('quiz_description'), request.form.get('quiz_image'), quiz_score, quiz_subject)
@@ -194,7 +198,7 @@ def index():
             return render_template("index.html", username=session["username"], rows=rows, graph_json=graph_json)
     except KeyError:
 
-        return render_template("index_nologin.html")
+        return render_template("signup.html")
 
 
 
@@ -254,8 +258,8 @@ def signup():
 
         for subject in subjects:
             db.execute("INSERT INTO quiz_totals (user_id, quizzes_taken, quiz_subjects, subject_average_score) VALUES (?, ?, ?, ?)", user_id, 0, subject, 0)
-            
-            
+
+
         return redirect("/login")
 
     return render_template("signup.html")
@@ -297,6 +301,9 @@ def start_quiz():
 def quiz():
     if request.method == "POST":
 
+
+
+
         timer = request.form.get('timer')
         timer = request.form.get('timerSelect') if timer == "Yes" else timer
         questions = request.form.get('questions')
@@ -331,6 +338,14 @@ def quiz():
 
         _ = load_dotenv(find_dotenv())
 
+
+        rows = db.execute("SELECT users.allowed_quizzes FROM users WHERE users.id = ?", session["user_id"])
+
+        allowed_quizzes = int(rows[0]["allowed_quizzes"]) 
+
+        if allowed_quizzes >= 5 :
+            return render_template("demo_limit.html")
+
         
 
         test_var = 2
@@ -363,6 +378,10 @@ def quiz():
             questions_list = questions_list = [{ "question":"Who won the 2012 NBA Finals?", "options":[ "Oklahoma City Thunder", "Miami Heat", "Los Angeles Lakers", "Boston Celtics" ], "answer":"Miami Heat", "explanation":"The Miami Heat defeated the Oklahoma City Thunder to win the NBA Championship in 2012.", "media":"" }, { "question":"Who was the Most Valuable Player (MVP) of the 2012 NBA Finals?", "options":[ "Kevin Durant", "LeBron James", "Dwyane Wade", "Russell Westbrook" ], "answer":"LeBron James", "explanation":"LeBron James of the Miami Heat was named the 2012 Finals MVP.", "media":"" }, { "question":"How many games did the 2012 NBA Finals last?", "options":[ "5 games", "6 games", "7 games", "4 games" ], "answer":"5 games", "explanation":"The 2012 NBA Finals lasted 5 games, with the Miami Heat winning the series 4-1.", "media":"" }, { "question":"Which team did the Oklahoma City Thunder beat in the Western Conference Finals to reach the 2012 NBA Finals?", "options":[ "San Antonio Spurs", "Los Angeles Lakers", "Denver Nuggets", "Dallas Mavericks" ], "answer":"San Antonio Spurs", "explanation":"The Thunder defeated the San Antonio Spurs in the Western Conference Finals.", "media":"" }, { "question":"Which player from the Miami Heat team scored the highest number of points in Game 5 of the 2012 NBA Finals?", "options":[ "Dwyane Wade", "LeBron James", "Chris Bosh", "Mario Chalmers" ], "answer":"LeBron James", "explanation":"LeBron James scored the highest number of points (26) for Miami Heat in Game 5.", "media":"" }, { "question":"Who coached the Miami Heat during the 2012 NBA Finals?", "options":[ "Pat Riley", "Erik Spoelstra", "Phil Jackson", "Gregg Popovich" ], "answer":"Erik Spoelstra", "explanation":"Erik Spoelstra was the head coach of the Miami Heat during the 2012 NBA Finals. Spoelstra helped lead the team to its second NBA Championship.", "media":"" }, { "question":"How many points did Kevin Durant average in the 2012 NBA Finals?", "options":[ "32.2 points", "35.2 points", "30.6 points", "34.0 points" ], "answer":"30.6 points", "explanation":"Kevin Durant averaged 30.6 points per game in the 2012 NBA Finals.", "media":"" }, { "question":"What was the venue for Game 1 of the 2012 NBA Finals?", "options":[ "Staples Center", "Chesapeake Energy Arena", "AmericanAirlines Arena", "TD Garden" ], "answer":"Chesapeake Energy Arena", "explanation":"Game 1 of the 2012 NBA Finals was played at the Chesapeake Energy Arena, home of the Oklahoma City Thunder.", "media":"" }, { "question":"In which quarter did Miami Heat score the most points in Game 5 of the 2012 NBA Finals?", "options":[ "1st Quarter", "2nd Quarter", "3rd Quarter", "4th Quarter" ], "answer":"2nd Quarter", "explanation":"Miami Heat scored the most points (34 points) in the 2nd quarter of Game 5.", "media":"" }, { "question":"Check the clip and indicate who made the final basket in Game 5 of the 2012 NBA Finals?", "options":[ "Dwyane Wade", "LeBron James", "Mario Chalmers", "Chris Bosh" ], "answer":"LeBron James", "explanation":"LeBron James made the final basket in Game 5 of the 2012 NBA Finals.", "subject": "Entertainment"}]
 
             questions_list_for_html = questions_list
+        
+        allowed_quizzes += 1
+
+        db.execute ("UPDATE users SET allowed_quizzes = ? WHERE id = ?", allowed_quizzes, session["user_id"])
 
 
         return render_template("quiz.html", questions_list=questions_list, questions_length=questions, timer=timer, questions_list_for_html=questions_list_for_html, quiz_topic=quiz_topic, quiz_description=quiz_description, quiz_image=quiz_image)
@@ -371,7 +390,7 @@ def quiz():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
 
 
 

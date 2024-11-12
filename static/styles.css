@@ -60,7 +60,7 @@ header, main {
     position: relative;
     width: 600px;
     height: 300px;
-    margin: 20% 30%;
+    margin: 10% 30%;
     text-align: center;
 }
 
@@ -827,6 +827,27 @@ button[type="submit"]:hover {
     color: black;
 }
 
+.demo-limit {
+    text-align: center;
+    font-family: 'Merriweather', sans-serif;
+}
+
+.demo-limit h2 {
+    font-size: 35px;
+    font-weight: bold;
+    color: black;
+}
+
+.demo-limit h3 {
+    font-size: 30px;
+    color: black;
+}
+
+
+.demo-limit h4 {
+    font-size: 25px;
+    color: black;
+}
 
 
 

@@ -5,49 +5,53 @@
 {% endblock %}
 
 {% block main %}
-<div class="account-access-wrapper">
-    <div class="account-access"> 
-        <form action="/signup" method="post">
-            <h1>Sign Up</h1>
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    <ul class="error-messages">
-                        {% for category, message in messages %}
-                            <li class="{{ category }}">{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            {% endwith %}
-            <div class="input-box">
-                <input type="text" placeholder="Username" id="usrnm" name="username"
-                required>
-            </div>
-            <div class="input-box">
-                <input type="password" id="pswrd" placeholder="Password" name="password"
-                required onkeyup="checkPassword(this.value)">
-                <span id="toggleBtn"></span>
-            </div>
-            <div class="validation">
-                <ul>
-                    <li id="lower">At least one lowercase letter</li>
-                    <li id="upper">At least one uppercase letter</li>
-                    <li id="number">At least one number</li>
-                    <li id="special">At least one special character</li>
-                    <li id="length">At least 8 characters</li>
-                </ul>
-            </div>
-            <div class="input-box">
-                <input type="password" id="cnfrm" placeholder="Confirm" name="confirmation"
-                required>
-            </div>
-             
-            <button type="submit">Sign Up</button>
-            <div class="login-signup-link">
-                <p>Already have an account? <a href="/login">Login</a></p>
-            </div>
-        </form>
-    </div>
+<div class="welcome-text">
+    <h1>Do you really know what you know?</h1>
+    <h2>Welcome to ANYTHIING.COM where you can test your knowledge on any topic known to man! Are you sure you really know what you know? Sign In below to get started or <a href="/login">Log In</a> if you already have an account!</h2>
 </div>
+    <div class="account-access-wrapper">
+        <div class="account-access"> 
+            <form action="/signup" method="post">
+                <h1>Sign Up</h1>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        <ul class="error-messages">
+                            {% for category, message in messages %}
+                                <li class="{{ category }}">{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endwith %}
+                <div class="input-box">
+                    <input type="text" placeholder="Username" id="usrnm" name="username"
+                    required>
+                </div>
+                <div class="input-box">
+                    <input type="password" id="pswrd" placeholder="Password" name="password"
+                    required onkeyup="checkPassword(this.value)">
+                    <span id="toggleBtn"></span>
+                </div>
+                <div class="validation">
+                    <ul>
+                        <li id="lower">At least one lowercase letter</li>
+                        <li id="upper">At least one uppercase letter</li>
+                        <li id="number">At least one number</li>
+                        <li id="special">At least one special character</li>
+                        <li id="length">At least 8 characters</li>
+                    </ul>
+                </div>
+                <div class="input-box">
+                    <input type="password" id="cnfrm" placeholder="Confirm" name="confirmation"
+                    required>
+                </div>
+                
+                <button type="submit">Sign Up</button>
+                <div class="login-signup-link">
+                    <p>Already have an account? <a href="/login">Login</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
 
 
 
@@ -58,7 +62,7 @@
 
 
 
-<!-- java code for sign in page -->
+<!-- javascript code for sign in page -->
 
 
 <script>
